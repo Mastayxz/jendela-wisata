@@ -26,6 +26,20 @@ class Tempat_wisata extends CI_Controller
         $data['kategori'] = $this->kategori_model->getKategoriByTempatWisata($id_tempat_wisata);
         $this->load->view('user/tempat_wisata/detail', $data);
     }
+    public function search_ajax()
+    {
+        try {
+            $keyword = $this->input->post('table_search');
+            if (empty($keyword) || strlen($keyword) < 3) {
+                $data['tempat_wisata'] = $this->M_tempatWisata->getData(); // Tampilkan semua data
+            } else {
+                $data['tempat_wisata'] = $this->M_tempatWisata->searchDestinasi($keyword);
+            }
+            $this->load->view('user/tempat_wisata/search_wisata', $data);
+        } catch (Exception $e) {
+            error_log('Error in search_ajax: ' . $e->getMessage());
+        }
+    }
 }
 
 /* End of file Home.php */

@@ -50,6 +50,17 @@ class m_admin extends CI_Model
         $result = $this->db->get('admin')->result_array();
         return $result[0];
     }
+    // File: application/models/M_admin.php
+
+    public function searchAdmin($keyword)
+    {
+        $this->db->like('LOWER(email)', strtolower($keyword), false);
+        $this->db->or_like('LOWER(username)', strtolower($keyword), false);
+        $this->db->or_like('LOWER(nama_admin)', strtolower($keyword), false);
+
+        $query = $this->db->get('admin');
+        return $query->result_array();
+    }
 }
 
 /* End of file m_admin.php */

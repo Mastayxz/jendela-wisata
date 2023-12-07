@@ -21,6 +21,7 @@ class TempatWisata extends CI_Controller
     {
         $data['page_title'] = 'Tempat Wisata';
         $data['tempat_wisata'] = $this->M_tempatWisata->getData();
+        $data['kategori_list'] = $this->kategori_model->getKategori();
         $this->load->view('admin/dashboard/destinasi/tempat_wisata', $data);
     }
     public function tambah()

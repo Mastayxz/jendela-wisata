@@ -23,74 +23,82 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama /th>
-                            <th>Biaya Masuk</th>
-                            <th>Alamat</th>
-                            <th>Lokasi</th>
-                            <th>Kategori</th>
-                            <th>Deskripsi</th>
-                            <th>Gambar 1</th>
-                            <th>Gambar 2</th>
-                            <th>Gambar 3 </th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="search_results">
-                        <!-- Hasil pencarian akan ditampilkan di sini -->
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <label for="filter_kategori">Filter Kategori:</label>
+                    <select name="filter_kategori" id="filter_kategori">
+                        <option value="">-- Semua Kategori --</option>
+                        <?php foreach ($kategori_list as $kategori) : ?>
+                            <option value="<?= $kategori->id_kategori; ?>"><?= $kategori->nama_kategori; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama /th>
+                                <th>Biaya Masuk</th>
+                                <th>Alamat</th>
+                                <th>Lokasi</th>
+                                <th>Kategori</th>
+                                <th>Deskripsi</th>
+                                <th>Gambar 1</th>
+                                <th>Gambar 2</th>
+                                <th>Gambar 3 </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search_results">
+                            <!-- Hasil pencarian akan ditampilkan di sini -->
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
         </div>
-
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        // Script AJAX untuk pembaruan data event
-        $.ajax({
-            url: "<?= base_url('admin/tempatWisata/search_ajax') ?>",
-            type: "POST",
-            data: {
-                table_search: '' // Kosongkan keyword untuk mendapatkan semua data
-            },
-            success: function(data) {
-                $('#search_results').html(data);
-            }
+    <script>
+        $(document).ready(function() {
+            // Script AJAX untuk pembaruan data event
+            $.ajax({
+                url: "<?= base_url('admin/tempatWisata/search_ajax') ?>",
+                type: "POST",
+                data: {
+                    table_search: '' // Kosongkan keyword untuk mendapatkan semua data
+                },
+                success: function(data) {
+                    $('#search_results').html(data);
+                }
+            });
+
+            // Event untuk memproses pencarian secara dinamis
+            $('#table_search').on('input', function() {
+                var keyword = $(this).val();
+                if (keyword.length >= 3 || keyword.length === 0) {
+                    $.ajax({
+                        url: "<?= base_url('admin/tempatWisata/search_ajax') ?>",
+                        type: "POST",
+                        data: {
+                            table_search: keyword
+                        },
+                        success: function(data) {
+                            $('#search_results').html(data);
+                        }
+                    });
+                } else {
+                    // Clear the results if the keyword is too short
+                    $('#search_results').html('');
+                }
+            });
         });
+    </script>
+    <!-- Footer -->
+    <?php $this->load->view('template/footer') ?>
+    <!-- JS -->
+    <?php $this->load->view('template/js') ?>
 
-        // Event untuk memproses pencarian secara dinamis
-        $('#table_search').on('input', function() {
-            var keyword = $(this).val();
-            if (keyword.length >= 3 || keyword.length === 0) {
-                $.ajax({
-                    url: "<?= base_url('admin/tempatWisata/search_ajax') ?>",
-                    type: "POST",
-                    data: {
-                        table_search: keyword
-                    },
-                    success: function(data) {
-                        $('#search_results').html(data);
-                    }
-                });
-            } else {
-                // Clear the results if the keyword is too short
-                $('#search_results').html('');
-            }
-        });
-    });
-</script>
-<!-- Footer -->
-<?php $this->load->view('template/footer') ?>
-<!-- JS -->
-<?php $this->load->view('template/js') ?>
-
-<!-- content -->
+    <!-- content -->

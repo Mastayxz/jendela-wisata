@@ -20,30 +20,28 @@
         </div>
     </div>
 </section>
-
 <div class="container-fluid mt-5">
     <div class="row">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="wrap mt-5">
-                        <img src="<?= base_url() . '/upload/destinasi/' . $destinasi['gambar1']; ?>" alt="" class="image" style="height: 73vh;">
+                        <img src="<?= base_url() . '/upload/destinasi/' . $destinasi['gambar1']; ?>" alt="" class="image" style="height: 80vh;">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="wrap mt-5">
-                        <div class="image-grid">
+                        <div class="image-grid" style="display: flex; flex-direction: column; height: 73vh;">
                             <!-- Gambar 1 -->
-                            <img src="<?= base_url() . '/upload/destinasi/' . $destinasi['gambar3']; ?>" alt="" class="small-image " style="height: 73vh;">
+                            <img src="<?= base_url() . '/upload/destinasi/' . $destinasi['gambar3']; ?>" alt="" class="small-image" style="flex: 1; height:40vh;">
                             <!-- Gambar 2 -->
-                            <img src=" <?= base_url() . '/upload/destinasi/' . $destinasi['gambar2']; ?>" alt="" class="small-image" style="height: 73vh;">
+                            <img src="<?= base_url() . '/upload/destinasi/' . $destinasi['gambar2']; ?>" alt="" class="small-image" style="flex: 1; height:38vh;">
                             <!-- Gambar 3 -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -53,7 +51,7 @@
             <div class="col-md-10 d-flex justify-content-between">
                 <div class="mt-5 kontent">
                     <ul class="kategori">
-                        <li><?php echo implode(", ", array_column($kategori, 'nama_kategori')); ?></li>
+                        <li>| <?php echo implode(", ", array_column($kategori, 'nama_kategori')); ?></li>
                         <li> | <?= $destinasi['alamat']; ?></li>
                     </ul>
                     <ul class="kategori">
@@ -84,7 +82,10 @@
             <div class="map-container mt-5">
                 <div class="map-info">
                     <p><i class="fa fa-map-marker map-icon"></i> Lokasi:</p>
-                    <p><?php echo $destinasi['lokasi']; ?></p>
+                    <div class="wrap">
+                        <p width="600" height="450"><?php echo $destinasi['lokasi']; ?></p>
+                    </div>
+
                 </div>
             </div>
         </div>
