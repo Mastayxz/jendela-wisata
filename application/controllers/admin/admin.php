@@ -47,6 +47,21 @@ class admin extends CI_Controller
         $this->m_admin->deleteadmin($id);
         redirect('admin/admin');
     }
+    public function searchAdmin()
+    {
+        $data['page_title'] = 'Admin';
+        try {
+            $keyword = $this->input->post('table_search');
+            if (empty($keyword) || strlen($keyword) < 3) {
+                $data['admin'] = $this->m_admin->getadmin(); // Tampilkan semua data
+            } else {
+                $data['admin'] = $this->m_admin->searchEvents($keyword);
+            }
+            $this->load->view('admin/dashboard/admin/dashadmin', $data);
+        } catch (Exception $e) {
+            error_log('Error in search_ajax: ' . $e->getMessage());
+        }
+    }
 }
 
 /* End of file admin.php */

@@ -18,6 +18,20 @@ class event extends CI_Controller
         $data['event'] = $this->M_event->getData();
         $this->load->view('user/event/index', $data);
     }
+    public function search_ajax()
+    {
+        try {
+            $keyword = $this->input->post('table_search');
+            if (empty($keyword) || strlen($keyword) < 3) {
+                $data['event'] = $this->M_event->getData(); // Tampilkan semua data
+            } else {
+                $data['event'] = $this->M_event->searchEvents($keyword);
+            }
+            $this->load->view('user/event/search_event', $data);
+        } catch (Exception $e) {
+            error_log('Error in search_ajax: ' . $e->getMessage());
+        }
+    }
 }
 
 /* End of file Home_ak.php */
